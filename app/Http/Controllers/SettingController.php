@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Setting;
-use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -14,8 +13,7 @@ class SettingController extends Controller
     public function index()
     {
         $setting = Setting::init();
-        $currencies = Currency::all();
-        return view('setting.index', compact('currencies', 'setting'));
+        return view('setting.index', compact('setting'));
     }
 
     /**
@@ -41,7 +39,7 @@ class SettingController extends Controller
             'company_street' => 'required|string|max:255',
             'company_city_and_province' => 'required|string|max:255',
             'company_country' => 'required|string|max:255',
-            'currency_id' => 'required|exists:currencies,id',
+            // 'currency_id' => 'required|exists:currencies,id',
             'thousand_separator' => 'required|string|max:1',
             'decimal_separator' => 'required|string|max:1',
             'locale_string' => 'required|string|max:5',

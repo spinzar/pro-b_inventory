@@ -4,10 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\MaterialCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +36,8 @@ Route::resource('/setting', SettingController::class)->middleware(['auth']);
 Route::resource('/role', RoleController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/user', UserController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/activity_log', ActivityLogController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/warehouse', WarehouseController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/unit', UnitController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/brand', BrandController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/material_category', MaterialCategoryController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/business', BusinessController::class)->middleware(['auth', 'check.permission']);

@@ -57,8 +57,8 @@
                 </li>
             @endif
 
-            {{-- @php
-                $permissionsNeeded = ['currency.index', 'tax_rate.index', 'account_group.index', 'account.index', 'payment_term.index'];
+            @php
+                $permissionsNeeded = ['warehouse.index', 'unit.index', 'brand.index', 'material_category.index', 'business.index'];
                 $hasAccess = array_intersect($permissionsNeeded, $list_of_permission);
             @endphp
             @if ($hasAccess)
@@ -83,7 +83,7 @@
                 </li>
             @endif
 
-            @php
+            {{-- @php
                 $permissionsNeeded = ['budget.index', 'journal.index', 'ledger.index'];
                 $hasAccess = array_intersect($permissionsNeeded, $list_of_permission);
             @endphp

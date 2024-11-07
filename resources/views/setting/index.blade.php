@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            {{-- <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="currency_id">
                                     {{ ucwords(str_replace('_', ' ', 'main_currency')) }}
                                 </label>
@@ -108,7 +108,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="thousand_separator">
