@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('warehouse_id')->constrained();
             $table->string('code')->unique();
             $table->date('date');
+            $table->double('value');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

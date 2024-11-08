@@ -18,7 +18,7 @@ use App\Models\Warehouse;
 use App\Models\Permission;
 use Illuminate\Support\Str;
 use App\Models\AccountGroup;
-use App\Models\JournalEntry;
+use App\Models\Material;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
 use Illuminate\Support\Facades\DB;
@@ -164,6 +164,12 @@ class DatabaseSeeder extends Seeder
             ["name" => Str::title(str_replace('_', ' ', 'edit_inventory_movement_configuration')), "route" => "inventory_movement_configuration.edit"],
             ["name" => Str::title(str_replace('_', ' ', 'update_inventory_movement_configuration')), "route" => "inventory_movement_configuration.update"],
             ["name" => Str::title(str_replace('_', ' ', 'delete_inventory_movement_configuration')), "route" => "inventory_movement_configuration.destroy"],
+            ["name" => Str::title(str_replace('_', ' ', 'inventory_movement_list')), "route" => "inventory_movement.index"],
+            ["name" => Str::title(str_replace('_', ' ', 'create_inventory_movement')), "route" => "inventory_movement.create"],
+            ["name" => Str::title(str_replace('_', ' ', 'save_inventory_movement')), "route" => "inventory_movement.store"],
+            ["name" => Str::title(str_replace('_', ' ', 'edit_inventory_movement')), "route" => "inventory_movement.edit"],
+            ["name" => Str::title(str_replace('_', ' ', 'update_inventory_movement')), "route" => "inventory_movement.update"],
+            ["name" => Str::title(str_replace('_', ' ', 'delete_inventory_movement')), "route" => "inventory_movement.destroy"],
         ]);
 
         $menus = Menu::select(['id'])->orderBy('id')->get();
@@ -223,17 +229,62 @@ class DatabaseSeeder extends Seeder
             ["name" => "Toko Online"],
         ]);
 
+        Material::insert([
+            [
+                'bulk_unit_id' => 1, // Example ID for "Box" in units
+                'retail_unit_id' => 3, // Example ID for "Pieces" in units
+                'contains' => 12,
+                'brand_id' => 1, // Example ID for "Brand A" in brands
+                'material_category_id' => 1, // Example ID for "Raw Materials" in categories
+                'name' => 'Material 1',
+                'bulk_barcode' => '1234567890123',
+                'retail_barcode' => '9876543210987',
+                'bulk_buy_price' => 100.50,
+                'retail_buy_price' => 10.00,
+                'bulk_sell_price' => 120.00,
+                'retail_sell_price' => 12.50,
+            ],
+            [
+                'bulk_unit_id' => 2, // Example ID for "Pack" in units
+                'retail_unit_id' => 3, // Example ID for "Pieces" in units
+                'contains' => 24,
+                'brand_id' => 2, // Example ID for "Brand B" in brands
+                'material_category_id' => 2, // Example ID for "Finished Goods" in categories
+                'name' => 'Material 2',
+                'bulk_barcode' => '1234567890124',
+                'retail_barcode' => '9876543210988',
+                'bulk_buy_price' => 200.00,
+                'retail_buy_price' => 20.00,
+                'bulk_sell_price' => 240.00,
+                'retail_sell_price' => 24.00,
+            ],
+            [
+                'bulk_unit_id' => 4, // Example ID for "Ton" in units
+                'retail_unit_id' => 6, // Example ID for "Kilogram" in units
+                'contains' => 1000,
+                'brand_id' => 3, // Example ID for "Brand C" in brands
+                'material_category_id' => 3, // Example ID for "Consumables" in categories
+                'name' => 'Material 3',
+                'bulk_barcode' => '1234567890125',
+                'retail_barcode' => '9876543210989',
+                'bulk_buy_price' => 500.00,
+                'retail_buy_price' => 0.50,
+                'bulk_sell_price' => 600.00,
+                'retail_sell_price' => 0.60,
+            ],
+        ]);
+
         InventoryMovementConfiguration::insert([
-            ["name" => "Lost", "code" => "LST", "stock" => "Out"],
-            ["name" => "Dead", "code" => "DED", "stock" => "Out"],
-            ["name" => "Stock Opname", "code" => "OPN", "stock" => "Any"],
-            ["name" => "Sale", "code" => "SLS", "stock" => "Out"],
-            ["name" => "Purchase", "code" => "PRC", "stock" => "In"],
-            ["name" => "Sales Return", "code" => "SLR", "stock" => "In"],
-            ["name" => "Purchase Return", "code" => "PRR", "stock" => "Out"],
-            ["name" => "Production Output", "code" => "PRO", "stock" => "In"],
-            ["name" => "Production Input", "code" => "PRI", "stock" => "Out"],
-            ["name" => "Warehouse Transfer", "code" => "TRF", "stock" => "Any"],
+            ["name" => "Lost", "code" => "LST", "stock" => "Out", "price_used" => "buy_price"],
+            ["name" => "Dead", "code" => "DED", "stock" => "Out", "price_used" => "buy_price"],
+            ["name" => "Stock Opname", "code" => "OPN", "stock" => "Any", "price_used" => "buy_price"],
+            ["name" => "Sale", "code" => "SLS", "stock" => "Out", "price_used" => "sell_price"],
+            ["name" => "Purchase", "code" => "PRC", "stock" => "In", "price_used" => "buy_price"],
+            ["name" => "Sales Return", "code" => "SLR", "stock" => "In", "price_used" => "sell_price"],
+            ["name" => "Purchase Return", "code" => "PRR", "stock" => "Out", "price_used" => "buy_price"],
+            ["name" => "Production Output", "code" => "PRO", "stock" => "In", "price_used" => "buy_price"],
+            ["name" => "Production Input", "code" => "PRI", "stock" => "Out", "price_used" => "buy_price"],
+            ["name" => "Warehouse Transfer", "code" => "TRF", "stock" => "Any", "price_used" => "buy_price"],
         ]);
 
     }

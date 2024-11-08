@@ -1,31 +1,33 @@
 @extends('template.master')
 
 @section('title')
-    {{ ucwords(str_replace('_', ' ', 'inventory_movement_configuration')) }}
+    {{ ucwords(str_replace('_', ' ', 'inventory_movement')) }}
 @endsection
 
 @section('content')
     <h1 class="h3 mb-4 text-gray-800">@yield('title')</h1>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta date="csrf-token" content="{{ csrf_token() }}">
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-body">
                 <div class="btn-group" role="group" aria-label="manage">
-                    @php $permissionsNeeded = ['inventory_movement_configuration.create']; $hasAccess = array_intersect($permissionsNeeded, $setting->list_of_permission); @endphp
+                    @php $permissionsNeeded = ['inventory_movement.create']; $hasAccess = array_intersect($permissionsNeeded, $setting->list_of_permission); @endphp
                     @if ($hasAccess)
-                    <a href="{{ route('inventory_movement_configuration.create') }}" class="btn btn-sm btn-primary">Create</a>
+                    <a href="{{ route('inventory_movement.create') }}" class="btn btn-sm btn-primary">Create</a>
                     @endif
                 </div>
                 <div class="table-responsive">
                     <br>
-                    <table class="table table-bordered table-hovered" id="inventory_movement_configuration_table" width="100%">
+                    <table class="table table-bordered table-hovered" id="inventory_movement_table" width="100%">
                         <thead>
                             <tr>
                                 <th>{{ strtoupper(str_replace('_', ' ', 'id')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'code')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'name')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'stock')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'price_used')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'type')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'date')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'value')) }}<sub>({{ $setting->currency->symbol }})</sub></th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'user')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'timestamp')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'action')) }}</th>
                             </tr>
                         </thead>
@@ -40,48 +42,62 @@
     <script type="text/javascript">
         const permissions = @json($setting->list_of_permission);
         $(document).ready(function() {
-            $('#inventory_movement_configuration_table').DataTable({
-                layout: {
-                    bottomStart: {
-                        buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'],
-                    },
-                },
+            $('#inventory_movement_table').DataTable({
+                dom: 'Bfrtip', // Menambahkan elemen tombol ke dalam DOM
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('inventory_movement_configuration.index') }}",
+                ajax: "{{ route('inventory_movement.index') }}",
                 order: [
                     [0, 'desc']
                 ],
                 columns: [
                     {
                         data: 'id',
-                        name: 'id'
+                        date: 'id'
                     },
                     {
                         data: 'code',
-                        name: 'code'
+                        date: 'code'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'inventory_movement_configuration_id',
+                        date: 'inventory_movement_configuration.name'
                     },
                     {
-                        data: 'stock',
-                        name: 'stock'
+                        data: 'date',
+                        date: 'date'
                     },
                     {
-                        data: 'price_used',
-                        name: 'price_used'
+                        data: 'value',
+                        name: 'value',
+                        render: $.fn.dataTable.render.number('{{ $setting->thousand_separator }}', '{{ $setting->decimal_separator }}', 2, '')
+                    },
+                    {
+                        data: 'user_id',
+                        date: 'user.name'
+                    },
+                    {
+                        data: 'created_at',
+                        date: 'created_at'
                     },
                     {
                         data: null,
                         name: 'actions',
                         render: function(data, type, row) {
                             let actions = '<div class="btn-group" role="group" aria-label="manage">';
-                            if (permissions.includes('inventory_movement_configuration.edit')) {
-                                actions += `<a href="{{ url('inventory_movement_configuration') }}/${row.id}/edit" class="btn btn-secondary btn-sm">Edit</a>`;
+                            if (permissions.includes('inventory_movement.edit')) {
+                                actions += `<a href="{{ url('inventory_movement') }}/${row.id}/edit" class="btn btn-secondary btn-sm">Edit</a>`;
                             }
-                            if (permissions.includes('inventory_movement_configuration.destroy')) {
+                            if (permissions.includes('inventory_movement.show')) {
+                                actions += `<a href="{{ url('inventory_movement') }}/${row.id}" class="btn btn-info btn-sm" target="_blank">View</a>`;
+                            }
+                            if (permissions.includes('inventory_movement.destroy')) {
                                 actions += `<button type="button" class="btn btn-danger btn-sm delete-btn" data-id="${row.id}" data-name="${row.id}">Delete</button>`;
                             }
                             actions += '</div>';
@@ -94,8 +110,8 @@
             // Event delegation for delete buttons
             $(document).on('click', '.delete-btn', function(event) {
                 event.preventDefault();
-                const inventory_movement_configurationId = $(this).data('id');
-                const csrfToken = $('meta[name="csrf-token"]').attr('content');
+                const inventory_movementId = $(this).data('id');
+                const csrfToken = $('meta[date="csrf-token"]').attr('content');
 
                 Swal.fire({
                     title: 'Are you sure?',
@@ -109,18 +125,17 @@
                     if (result.isConfirmed) {
                         const form = $('<form>', {
                             method: 'POST',
-                            action: `{{ url('inventory_movement_configuration') }}/${inventory_movement_configurationId}`
+                            action: `{{ url('inventory_movement') }}/${inventory_movementId}`
                         });
-
                         $('<input>', {
                             type: 'hidden',
-                            name: '_method',
+                            name: '_method', // Ubah date menjadi name
                             value: 'DELETE'
                         }).appendTo(form);
 
                         $('<input>', {
                             type: 'hidden',
-                            name: '_token',
+                            name: '_token', // Ubah date menjadi name
                             value: csrfToken
                         }).appendTo(form);
 

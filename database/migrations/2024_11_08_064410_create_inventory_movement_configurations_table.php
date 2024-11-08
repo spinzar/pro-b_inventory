@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name')->unique();
             $table->string('stock');
+            $table->string('price_used');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

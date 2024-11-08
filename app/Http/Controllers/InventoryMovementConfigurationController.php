@@ -41,6 +41,7 @@ class InventoryMovementConfigurationController extends Controller
             'name' => 'required|string|max:255|unique:inventory_movement_configurations,name',
             'code' => 'required|string|max:255|unique:inventory_movement_configurations,name',
             'stock' => 'required',
+            'price_used' => 'required',
         ]);
 
         InventoryMovementConfiguration::create($request->all());
@@ -65,6 +66,7 @@ class InventoryMovementConfigurationController extends Controller
             'name' => 'required|string|max:255|unique:inventory_movement_configurations,name,' . $inventory_movement_configuration->id,
             'code' => 'required|string|max:255|unique:inventory_movement_configurations,code,' . $inventory_movement_configuration->id,
             'stock' => 'required',
+            'price_used' => 'required',
         ]);
 
         $inventory_movement_configuration->update($request->all());

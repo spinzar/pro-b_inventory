@@ -53,6 +53,18 @@
                                 </div>
                             </div>
 
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="price_used">
+                                    {{ ucwords(str_replace('_', ' ', 'price_used')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <select name="price_used" id="price_used" class="form-control">
+                                        <option value="buy_price">buy_price</option>
+                                        <option value="sell_price">sell_price</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
                                     <button type="submit" class="btn btn-primary">Save</button>

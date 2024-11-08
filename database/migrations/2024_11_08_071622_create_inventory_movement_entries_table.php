@@ -19,10 +19,7 @@ return new class extends Migration
             $table->float('retail_in');
             $table->float('bulk_out');
             $table->float('retail_out');
-            // $table->double('bulk_price_in');
-            // $table->double('retail_price_in');
-            // $table->double('bulk_price_out');
-            // $table->double('retail_price_out');
+            $table->double('value');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
