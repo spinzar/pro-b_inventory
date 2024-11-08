@@ -15,6 +15,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\MaterialCategoryController;
+use App\Http\Controllers\InventoryMovementConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +46,4 @@ Route::resource('/material_category', MaterialCategoryController::class)->middle
 Route::resource('/business', BusinessController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/material', MaterialController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/supplier', SupplierController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/inventory_movement_configuration', InventoryMovementConfigurationController::class)->middleware(['auth', 'check.permission']);

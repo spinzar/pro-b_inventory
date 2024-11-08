@@ -56,21 +56,31 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $setting = Setting::init();
+
         $bulk_buy_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->bulk_buy_price)));
         $retail_buy_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->retail_buy_price)));
+
         $request->request->add([
             'bulk_buy_price' => $bulk_buy_price,
             'retail_buy_price' => $retail_buy_price,
         ]);
-        if ($request->has('bulk_sell_price')) {
+
+        // Cek apakah bulk_sell_price ada dan tidak kosong sebelum memprosesnya
+        if ($request->filled('bulk_sell_price')) {
             $bulk_sell_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->bulk_sell_price)));
             $request->request->add(['bulk_sell_price' => $bulk_sell_price]);
+        } else {
+            $request->request->add(['bulk_sell_price' => null]);
         }
-        if ($request->has('retail_sell_price')) {
+
+        // Cek apakah retail_sell_price ada dan tidak kosong sebelum memprosesnya
+        if ($request->filled('retail_sell_price')) {
             $retail_sell_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->retail_sell_price)));
             $request->request->add(['retail_sell_price' => $retail_sell_price]);
+        } else {
+            $request->request->add(['retail_sell_price' => null]);
         }
-        return $request;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:materials,name',
             'bulk_unit_id' => 'required|exists:units,id',
@@ -80,10 +90,10 @@ class MaterialController extends Controller
             'material_category_id' => 'required|exists:material_categories,id',
             'bulk_barcode' => 'nullable|string|max:255|unique:materials,bulk_barcode',
             'retail_barcode' => 'nullable|string|max:255|unique:materials,retail_barcode',
-            'bulk_buy_price' => 'required|numeric|min:0',
-            'retail_buy_price' => 'required|numeric|min:0',
-            'bulk_sell_price' => 'nullable|numeric|min:0|gte:bulk_buy_price',
-            'retail_sell_price' => 'nullable|numeric|min:0|gte:retail_buy_price',
+            'bulk_buy_price' => 'required|numeric',
+            'retail_buy_price' => 'required|numeric',
+            'bulk_sell_price' => 'nullable|numeric',
+            'retail_sell_price' => 'nullable|numeric',
         ]);
         Material::create($validated);
         return redirect()->route('material.index')->with('success', 'Material has been created.');
@@ -107,21 +117,31 @@ class MaterialController extends Controller
     public function update(Request $request, Material $material)
     {
         $setting = Setting::init();
+
         $bulk_buy_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->bulk_buy_price)));
         $retail_buy_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->retail_buy_price)));
+
         $request->request->add([
             'bulk_buy_price' => $bulk_buy_price,
             'retail_buy_price' => $retail_buy_price,
         ]);
-        if ($request->has('bulk_sell_price')) {
+
+        // Cek apakah bulk_sell_price ada dan tidak kosong sebelum memprosesnya
+        if ($request->filled('bulk_sell_price')) {
             $bulk_sell_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->bulk_sell_price)));
             $request->request->add(['bulk_sell_price' => $bulk_sell_price]);
+        } else {
+            $request->request->add(['bulk_sell_price' => null]);
         }
-        if ($request->has('retail_sell_price')) {
+
+        // Cek apakah retail_sell_price ada dan tidak kosong sebelum memprosesnya
+        if ($request->filled('retail_sell_price')) {
             $retail_sell_price = floatval(str_replace($setting->decimal_separator, '.', str_replace($setting->thousand_separator, '', $request->retail_sell_price)));
             $request->request->add(['retail_sell_price' => $retail_sell_price]);
+        } else {
+            $request->request->add(['retail_sell_price' => null]);
         }
-        return $request;
+
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:materials,name,' . $material->id,
             'bulk_unit_id' => 'required|exists:units,id',
@@ -129,13 +149,12 @@ class MaterialController extends Controller
             'retail_unit_id' => 'required|exists:units,id|different:bulk_unit_id',
             'brand_id' => 'required|exists:brands,id',
             'material_category_id' => 'required|exists:material_categories,id',
-            'name' => 'required|string|max:255|unique:materials,name',
             'bulk_barcode' => 'nullable|string|max:255|unique:materials,bulk_barcode',
             'retail_barcode' => 'nullable|string|max:255|unique:materials,retail_barcode',
-            'bulk_buy_price' => 'required|numeric|min:0',
-            'retail_buy_price' => 'required|numeric|min:0',
-            'bulk_sell_price' => 'nullable|numeric|min:0|gte:bulk_buy_price',
-            'retail_sell_price' => 'nullable|numeric|min:0|gte:retail_buy_price',
+            'bulk_buy_price' => 'required|numeric',
+            'retail_buy_price' => 'required|numeric',
+            'bulk_sell_price' => 'nullable|numeric',
+            'retail_sell_price' => 'nullable|numeric',
         ]);
 
         $material->update($validated);

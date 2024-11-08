@@ -62,7 +62,7 @@ class WarehouseController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:warehouses,name,' . $warehouse->id,
         ]);
-
+        self::updateColumn($warehouse, $request);
         $warehouse->update($request->all());
         return redirect()->route('warehouse.index')->with('success', 'Warehouse has been updated.');
     }
@@ -75,5 +75,17 @@ class WarehouseController extends Controller
         $warehouse = Warehouse::findOrFail($id);
         $warehouse->delete();
         return redirect()->back()->with("success", "Warehouse has been deleted.");
+    }
+
+    public static function updateColumn($warehouse, $request)
+    {
+        $old_column_name = str_replace(' ', '_', $warehouse->name);
+        $new_column_name = str_replace(' ', '_', $request->name);
+        $queries = [
+            "ALTER TABLE materials CHANGE COLUMN `{$old_column_name}` `{$new_column_name}` FLOAT NULL",
+        ];
+        foreach ($queries as $query) {
+            DB::statement($query);
+        }
     }
 }

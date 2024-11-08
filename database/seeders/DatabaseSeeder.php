@@ -21,6 +21,8 @@ use App\Models\AccountGroup;
 use App\Models\JournalEntry;
 use Illuminate\Database\Seeder;
 use App\Models\MaterialCategory;
+use Illuminate\Support\Facades\DB;
+use App\Models\InventoryMovementConfiguration;
 
 class DatabaseSeeder extends Seeder
 {
@@ -156,6 +158,12 @@ class DatabaseSeeder extends Seeder
             ["name" => Str::title(str_replace('_', ' ', 'edit_supplier')), "route" => "supplier.edit"],
             ["name" => Str::title(str_replace('_', ' ', 'update_supplier')), "route" => "supplier.update"],
             ["name" => Str::title(str_replace('_', ' ', 'delete_supplier')), "route" => "supplier.destroy"],
+            ["name" => Str::title(str_replace('_', ' ', 'inventory_movement_configuration_list')), "route" => "inventory_movement_configuration.index"],
+            ["name" => Str::title(str_replace('_', ' ', 'create_inventory_movement_configuration')), "route" => "inventory_movement_configuration.create"],
+            ["name" => Str::title(str_replace('_', ' ', 'save_inventory_movement_configuration')), "route" => "inventory_movement_configuration.store"],
+            ["name" => Str::title(str_replace('_', ' ', 'edit_inventory_movement_configuration')), "route" => "inventory_movement_configuration.edit"],
+            ["name" => Str::title(str_replace('_', ' ', 'update_inventory_movement_configuration')), "route" => "inventory_movement_configuration.update"],
+            ["name" => Str::title(str_replace('_', ' ', 'delete_inventory_movement_configuration')), "route" => "inventory_movement_configuration.destroy"],
         ]);
 
         $menus = Menu::select(['id'])->orderBy('id')->get();
@@ -168,6 +176,17 @@ class DatabaseSeeder extends Seeder
             ["name" => "Secondary Warehouse"],
             ["name" => "Spare Parts Storage"],
         ]);
+        $warehouses = Warehouse::all();
+        foreach ($warehouses as $warehouse) {
+            $column_name = strtolower(str_replace(' ', '_', $warehouse->name));
+            $queries = [
+                "ALTER TABLE materials ADD COLUMN `{$column_name}_bulk` FLOAT NULL",
+                "ALTER TABLE materials ADD COLUMN `{$column_name}_retail` FLOAT NULL",
+            ];
+            foreach ($queries as $query) {
+                DB::statement($query);
+            }
+        }
 
         Unit::insert([
             ["name" => "Box", "symbol" => "box"],
@@ -202,6 +221,19 @@ class DatabaseSeeder extends Seeder
             ["name" => "Penjual Partai"],
             ["name" => "Penjual Eceran"],
             ["name" => "Toko Online"],
+        ]);
+
+        InventoryMovementConfiguration::insert([
+            ["name" => "Lost", "code" => "LST", "stock" => "Out"],
+            ["name" => "Dead", "code" => "DED", "stock" => "Out"],
+            ["name" => "Stock Opname", "code" => "OPN", "stock" => "Any"],
+            ["name" => "Sale", "code" => "SLS", "stock" => "Out"],
+            ["name" => "Purchase", "code" => "PRC", "stock" => "In"],
+            ["name" => "Sales Return", "code" => "SLR", "stock" => "In"],
+            ["name" => "Purchase Return", "code" => "PRR", "stock" => "Out"],
+            ["name" => "Production Output", "code" => "PRO", "stock" => "In"],
+            ["name" => "Production Input", "code" => "PRI", "stock" => "Out"],
+            ["name" => "Warehouse Transfer", "code" => "TRF", "stock" => "Any"],
         ]);
 
     }
