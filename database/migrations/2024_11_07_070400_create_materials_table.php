@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('bulk_unit_id')->constrained('units');
             $table->foreignId('retail_unit_id')->constrained('units');
+            $table->float('contains');
             $table->foreignId('brand_id')->constrained();
             $table->foreignId('material_category_id')->constrained();
             $table->string('name')->unique();
             $table->string('bulk_barcode')->nullable();
             $table->string('retail_barcode')->nullable();
-            $table->double('buy_price');
-            $table->double('sell_price');
+            $table->double('bulk_buy_price');
+            $table->double('retail_buy_price');
+            $table->double('bulk_sell_price')->nullable();
+            $table->double('retail_sell_price')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

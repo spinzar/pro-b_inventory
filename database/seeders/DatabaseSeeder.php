@@ -29,6 +29,47 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Currency::insert([
+            ['name' => 'Indonesian Rupiah', 'symbol' => 'Rp'],
+            ['name' => 'US Dollar', 'symbol' => '$'],
+            ['name' => 'Euro', 'symbol' => '€'],
+            ['name' => 'British Pound', 'symbol' => '£'],
+            ['name' => 'Japanese Yen', 'symbol' => '¥'],
+            ['name' => 'Australian Dollar', 'symbol' => 'A$'],
+            ['name' => 'Canadian Dollar', 'symbol' => 'C$'],
+            ['name' => 'Swiss Franc', 'symbol' => 'CHF'],
+            ['name' => 'Chinese Yuan', 'symbol' => '¥'],
+            ['name' => 'Indian Rupee', 'symbol' => '₹'],
+            ['name' => 'Mexican Peso', 'symbol' => 'MX$'],
+            ['name' => 'Brazilian Real', 'symbol' => 'R$'],
+            ['name' => 'South African Rand', 'symbol' => 'R'],
+            ['name' => 'Russian Ruble', 'symbol' => '₽'],
+            ['name' => 'South Korean Won', 'symbol' => '₩'],
+            ['name' => 'Turkish Lira', 'symbol' => '₺'],
+            ['name' => 'Singapore Dollar', 'symbol' => 'S$'],
+            ['name' => 'Malaysian Ringgit', 'symbol' => 'RM'],
+            ['name' => 'Philippine Peso', 'symbol' => '₱'],
+            ['name' => 'Thai Baht', 'symbol' => '฿'],
+            ['name' => 'Vietnamese Dong', 'symbol' => '₫'],
+            ['name' => 'Saudi Riyal', 'symbol' => '﷼'],
+            ['name' => 'United Arab Emirates Dirham', 'symbol' => 'د.إ'],
+            ['name' => 'Hong Kong Dollar', 'symbol' => 'HK$'],
+            ['name' => 'New Zealand Dollar', 'symbol' => 'NZ$'],
+            ['name' => 'Norwegian Krone', 'symbol' => 'kr'],
+            ['name' => 'Swedish Krona', 'symbol' => 'kr'],
+            ['name' => 'Danish Krone', 'symbol' => 'kr'],
+            ['name' => 'Egyptian Pound', 'symbol' => 'E£'],
+            ['name' => 'Bangladeshi Taka', 'symbol' => '৳'],
+            ['name' => 'Pakistani Rupee', 'symbol' => '₨'],
+            ['name' => 'Sri Lankan Rupee', 'symbol' => 'Rs'],
+            ['name' => 'Chilean Peso', 'symbol' => 'CLP$'],
+            ['name' => 'Peruvian Sol', 'symbol' => 'S/'],
+            ['name' => 'Colombian Peso', 'symbol' => 'COP$'],
+            ['name' => 'Argentine Peso', 'symbol' => 'ARS$'],
+            ['name' => 'Kuwaiti Dinar', 'symbol' => 'KD'],
+            ['name' => 'Qatari Riyal', 'symbol' => 'QR'],
+            ['name' => 'Omani Rial', 'symbol' => '﷼'],
+        ]);
 
         Setting::insert([
             [
@@ -39,7 +80,7 @@ class DatabaseSeeder extends Seeder
                 'company_street' => 'Jl. Raya Kebon Agung No.1',
                 'company_city_and_province' => 'Malang, Jawa Timur',
                 'company_country' => 'Indonesia',
-                // 'currency_id' => 1,
+                'currency_id' => 1,
                 'thousand_separator' => '.',
                 'decimal_separator' => ',',
                 'locale_string' => 'id-ID',
@@ -129,9 +170,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Unit::insert([
+            ["name" => "Box", "symbol" => "box"],
+            ["name" => "Pack", "symbol" => "pack"],
+            ["name" => "Pieces", "symbol" => "pcs"],
+            ["name" => "Ton", "symbol" => "ton"],
+            ["name" => "Kuintal", "symbol" => "ku"],
             ["name" => "Kilogram", "symbol" => "kg"],
+            ["name" => "Hectoliter", "symbol" => "hL"],
             ["name" => "Liter", "symbol" => "L"],
+            ["name" => "Mililiter", "symbol" => "mL"],
+            ["name" => "Kilometer", "symbol" => "km"],
             ["name" => "Meter", "symbol" => "m"],
+            ["name" => "Centimeter", "symbol" => "cm"],
         ]);
 
         MaterialCategory::insert([

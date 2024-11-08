@@ -29,8 +29,10 @@
                                 <th>{{ ucwords(str_replace('_', ' ', 'material_category')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'bulk_barcode')) }}</th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'retail_barcode')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'buy_price')) }}</th>
-                                <th>{{ ucwords(str_replace('_', ' ', 'sell_price')) }}</th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'bulk_buy_price')) }}<sub>({{ $setting->currency->symbol }})</sub></th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'retail_buy_price')) }}<sub>({{ $setting->currency->symbol }})</sub></th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'bulk_sell_price')) }}<sub>({{ $setting->currency->symbol }})</sub></th>
+                                <th>{{ ucwords(str_replace('_', ' ', 'retail_sell_price')) }}<sub>({{ $setting->currency->symbol }})</sub></th>
                                 <th>{{ ucwords(str_replace('_', ' ', 'action')) }}</th>
                             </tr>
                         </thead>
@@ -91,13 +93,23 @@
                         name: 'retail_barcode'
                     },
                     {
-                        data: 'buy_price',
-                        name: 'buy_price',
+                        data: 'bulk_buy_price',
+                        name: 'bulk_buy_price',
                         render: $.fn.dataTable.render.number('{{ $setting->thousand_separator }}', '{{ $setting->decimal_separator }}', 2, '')
                     },
                     {
-                        data: 'sell_price',
-                        name: 'sell_price',
+                        data: 'retail_buy_price',
+                        name: 'retail_buy_price',
+                        render: $.fn.dataTable.render.number('{{ $setting->thousand_separator }}', '{{ $setting->decimal_separator }}', 2, '')
+                    },
+                    {
+                        data: 'bulk_sell_price',
+                        name: 'bulk_sell_price',
+                        render: $.fn.dataTable.render.number('{{ $setting->thousand_separator }}', '{{ $setting->decimal_separator }}', 2, '')
+                    },
+                    {
+                        data: 'retail_sell_price',
+                        name: 'retail_sell_price',
                         render: $.fn.dataTable.render.number('{{ $setting->thousand_separator }}', '{{ $setting->decimal_separator }}', 2, '')
                     },
                     {

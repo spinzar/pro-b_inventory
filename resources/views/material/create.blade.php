@@ -53,6 +53,18 @@
                             </div>
 
                             <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="contains">
+                                    {{ ucwords(str_replace('_', ' ', 'contains')) }}
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control @error('contains') is-invalid @enderror" id="contains" name="contains" value="{{ old("contains") }}" required>
+                                    @error('contains')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="retail_unit_id">
                                     {{ ucwords(str_replace('_', ' ', 'retail unit')) }}
                                 </label>
@@ -128,24 +140,48 @@
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="buy_price">
-                                    {{ ucwords(str_replace('_', ' ', 'buy price')) }}
+                                <label class="col-sm-2 col-form-label" for="bulk_buy_price">
+                                    {{ ucwords(str_replace('_', ' ', 'bulk_buy_price')) }}<sub>({{ $setting->currency->symbol }})</sub>
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control number-separator @error('buy_price') is-invalid @enderror" id="buy_price" name="buy_price" value="{{ old("buy_price") }}" step="0.01" required>
-                                    @error('buy_price')
+                                    <input type="text" class="form-control number-separator @error('bulk_buy_price') is-invalid @enderror" id="bulk_buy_price" name="bulk_buy_price" value="{{ old("bulk_buy_price") }}" step="0.01" required>
+                                    @error('bulk_buy_price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="sell_price">
-                                    {{ ucwords(str_replace('_', ' ', 'sell price')) }}
+                                <label class="col-sm-2 col-form-label" for="retail_buy_price">
+                                    {{ ucwords(str_replace('_', ' ', 'retail_buy_price')) }}<sub>({{ $setting->currency->symbol }})</sub>
                                 </label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control number-separator @error('sell_price') is-invalid @enderror" id="sell_price" name="sell_price" value="{{ old("sell_price") }}" step="0.01" required>
-                                    @error('sell_price')
+                                    <input type="text" class="form-control number-separator @error('retail_buy_price') is-invalid @enderror" id="retail_buy_price" name="retail_buy_price" value="{{ old("retail_buy_price") }}" step="0.01" required>
+                                    @error('retail_buy_price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="bulk_sell_price">
+                                    {{ ucwords(str_replace('_', ' ', 'bulk_sell_price')) }}<sub>({{ $setting->currency->symbol }})</sub>
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control number-separator @error('bulk_sell_price') is-invalid @enderror" id="bulk_sell_price" name="bulk_sell_price" value="{{ old("bulk_sell_price") }}" step="0.01">
+                                    @error('bulk_sell_price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="retail_sell_price">
+                                    {{ ucwords(str_replace('_', ' ', 'retail_sell_price')) }}<sub>({{ $setting->currency->symbol }})</sub>
+                                </label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control number-separator @error('retail_sell_price') is-invalid @enderror" id="retail_sell_price" name="retail_sell_price" value="{{ old("retail_sell_price") }}" step="0.01">
+                                    @error('retail_sell_price')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('company_street');
             $table->string('company_city_and_province');
             $table->string('company_country');
-            // $table->foreignId('currency_id')->constrained();
+            $table->foreignId('currency_id')->constrained();
             $table->string('thousand_separator');
             $table->string('decimal_separator');
             $table->string('locale_string');
