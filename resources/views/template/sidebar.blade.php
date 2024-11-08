@@ -58,7 +58,7 @@
             @endif
 
             @php
-                $permissionsNeeded = ['warehouse.index', 'unit.index', 'brand.index', 'material_category.index', 'business.index'];
+                $permissionsNeeded = ['warehouse.index', 'unit.index', 'brand.index', 'material_category.index', 'business.index', 'material.index', 'supplier.index'];
                 $hasAccess = array_intersect($permissionsNeeded, $list_of_permission);
             @endphp
             @if ($hasAccess)

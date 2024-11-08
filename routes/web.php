@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ActivityLogController;
@@ -41,3 +43,5 @@ Route::resource('/unit', UnitController::class)->middleware(['auth', 'check.perm
 Route::resource('/brand', BrandController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/material_category', MaterialCategoryController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/business', BusinessController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/material', MaterialController::class)->middleware(['auth', 'check.permission']);
+Route::resource('/supplier', SupplierController::class)->middleware(['auth', 'check.permission']);

@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('unit_id')->constrained();
+            $table->foreignId('bulk_unit_id')->constrained('units');
+            $table->foreignId('retail_unit_id')->constrained('units');
             $table->foreignId('brand_id')->constrained();
             $table->foreignId('material_category_id')->constrained();
             $table->string('name')->unique();
+            $table->string('bulk_barcode')->nullable();
+            $table->string('retail_barcode')->nullable();
+            $table->double('buy_price');
+            $table->double('sell_price');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

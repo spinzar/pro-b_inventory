@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('business_id')->constrained();
             $table->string('name')->unique();
+            $table->text('address');
+            $table->string('phone');
+            $table->string('email')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

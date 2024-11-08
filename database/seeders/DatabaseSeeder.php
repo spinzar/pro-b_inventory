@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\Account;
 use App\Models\Journal;
 use App\Models\Setting;
+use App\Models\Business;
 use App\Models\Currency;
 use App\Models\Warehouse;
 use App\Models\Permission;
@@ -102,6 +103,18 @@ class DatabaseSeeder extends Seeder
             ["name" => Str::title(str_replace('_', ' ', 'edit_business')), "route" => "business.edit"],
             ["name" => Str::title(str_replace('_', ' ', 'update_business')), "route" => "business.update"],
             ["name" => Str::title(str_replace('_', ' ', 'delete_business')), "route" => "business.destroy"],
+            ["name" => Str::title(str_replace('_', ' ', 'material_list')), "route" => "material.index"],
+            ["name" => Str::title(str_replace('_', ' ', 'create_material')), "route" => "material.create"],
+            ["name" => Str::title(str_replace('_', ' ', 'save_material')), "route" => "material.store"],
+            ["name" => Str::title(str_replace('_', ' ', 'edit_material')), "route" => "material.edit"],
+            ["name" => Str::title(str_replace('_', ' ', 'update_material')), "route" => "material.update"],
+            ["name" => Str::title(str_replace('_', ' ', 'delete_material')), "route" => "material.destroy"],
+            ["name" => Str::title(str_replace('_', ' ', 'supplier_list')), "route" => "supplier.index"],
+            ["name" => Str::title(str_replace('_', ' ', 'create_supplier')), "route" => "supplier.create"],
+            ["name" => Str::title(str_replace('_', ' ', 'save_supplier')), "route" => "supplier.store"],
+            ["name" => Str::title(str_replace('_', ' ', 'edit_supplier')), "route" => "supplier.edit"],
+            ["name" => Str::title(str_replace('_', ' ', 'update_supplier')), "route" => "supplier.update"],
+            ["name" => Str::title(str_replace('_', ' ', 'delete_supplier')), "route" => "supplier.destroy"],
         ]);
 
         $menus = Menu::select(['id'])->orderBy('id')->get();
@@ -131,6 +144,14 @@ class DatabaseSeeder extends Seeder
             ["name" => "Brand A"],
             ["name" => "Brand B"],
             ["name" => "Brand C"],
+        ]);
+
+        Business::insert([
+            ["name" => "Pabrik"],
+            ["name" => "Importir"],
+            ["name" => "Penjual Partai"],
+            ["name" => "Penjual Eceran"],
+            ["name" => "Toko Online"],
         ]);
 
     }
