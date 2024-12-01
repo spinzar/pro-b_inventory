@@ -1,6 +1,8 @@
 <?php
+// routes/web.php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
@@ -49,3 +51,10 @@ Route::resource('/material', MaterialController::class)->middleware(['auth', 'ch
 Route::resource('/supplier', SupplierController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/inventory_movement_configuration', InventoryMovementConfigurationController::class)->middleware(['auth', 'check.permission']);
 Route::resource('/inventory_movement', InventoryMovementController::class)->middleware(['auth', 'check.permission']);
+
+
+//
+
+Route::get('/test-activity-logs-table', function () {
+    return DB::select('PRAGMA table_info(activity_logs)');
+})->name('test.activity.logs.table');

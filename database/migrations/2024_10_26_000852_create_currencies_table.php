@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('currencies', function (Blueprint $table) {
+        Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('symbol');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete(); // Foreign key for user, nullable
+            $table->text('description'); // Longer description field for detailed activity logs
+            $table->timestamps(); // created_at and updated_at
         });
     }
 
@@ -25,6 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('currencies');
+        Schema::dropIfExists('activity_logs');
     }
 };
+

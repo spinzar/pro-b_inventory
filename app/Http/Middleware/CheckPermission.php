@@ -1,4 +1,5 @@
 <?php
+// app/Http/Middleware/CheckPermission.php
 
 namespace App\Http\Middleware;
 

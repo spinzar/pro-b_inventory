@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\ActivityLog;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -15,7 +15,8 @@ class User extends Authenticatable
 
     protected $guarded = [];
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 
@@ -23,21 +24,21 @@ class User extends Authenticatable
     {
         static::created(function ($user) {
             ActivityLog::create([
-                'user_id' => Auth()->user()->id,
+                'user_id' => Auth::check() ? Auth::id() : null, // Fallback to null if unauthenticated
                 'description' => "User '{$user->name}' was created.",
             ]);
         });
 
         static::updated(function ($user) {
             ActivityLog::create([
-                'user_id' => Auth()->user()->id,
+                'user_id' => Auth::check() ? Auth::id() : null, // Fallback to null if unauthenticated
                 'description' => "User '{$user->name}' was updated.",
             ]);
         });
 
         static::deleted(function ($user) {
             ActivityLog::create([
-                'user_id' => Auth()->user()->id,
+                'user_id' => Auth::check() ? Auth::id() : null, // Fallback to null if unauthenticated
                 'description' => "User '{$user->name}' was deleted.",
             ]);
         });
